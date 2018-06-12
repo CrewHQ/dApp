@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { Redirect } from "@reach/router";
 
 // SignIn component - sign in
 export default class SignIn extends Component {
@@ -10,6 +11,7 @@ export default class SignIn extends Component {
     this.state = {
       email: "",
       password: "",
+      signedIn: false      
     }
   }
 
@@ -30,45 +32,50 @@ export default class SignIn extends Component {
         console.error('could not sign in')
       } else {
         console.log('signed in!')
+        this.setState({ signedIn: true });
       }
     })
   }
 
   render() {
-    const { email, password, } = this.state;
+    const { email, password, signedIn } = this.state;
     const isValid = email.length > 0 && password.length > 0;
 
-    return (
-      <div className="container">
-        <header>
-          <h1>Welcome back!</h1>
-          <p>Enter your email address to sign in to Crew</p>
-        </header>
+    if (signedIn) {
+      return <Redirect to="/tasks" noThrow/>
+    } else {
+      return (
+        <div className="container">
+          <header>
+            <h1>Welcome back!</h1>
+            <p>Enter your email address to sign in to Crew</p>
+          </header>
 
-        <form onSubmit={this.handleSubmit}>
-          <label>Your email</label>
-          <input 
-            type="text" 
-            placeholder="john@example.com"
-            onChange={this.handleEmailChange}
-            autoComplete='email'
-          />
+          <form onSubmit={this.handleSubmit}>
+            <label>Your email</label>
+            <input 
+              type="text" 
+              placeholder="john@example.com"
+              onChange={this.handleEmailChange}
+              autoComplete='email'
+            />
 
-          <label>Password</label>          
-          <input 
-            type="password" 
-            placeholder="password"
-            onChange={this.handlePasswordChange}   
-            autoComplete='current-password'         
-          />
+            <label>Password</label>          
+            <input 
+              type="password" 
+              placeholder="password"
+              onChange={this.handlePasswordChange}   
+              autoComplete='current-password'         
+            />
 
-          <button 
-            disabled={!isValid}
-          >
-            Sign in!
-          </button>
-        </form>
-      </div>
-    );
+            <button 
+              disabled={!isValid}
+            >
+              Sign in!
+            </button>
+          </form>
+        </div>
+      );
+    }
   }
 }

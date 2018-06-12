@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 import { Accounts } from 'meteor/accounts-base'
-import AppUser from './../../../both/userModel'
+import { AppUser } from './../../../both/userModel'
 
 Accounts.onCreateUser (options, user) ->
   user.services.email = {}
