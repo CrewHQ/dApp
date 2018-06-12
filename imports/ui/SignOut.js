@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Redirect } from "@reach/router";
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class SignOut extends Component {
+class SignOut extends Component {
   constructor() {
     super();
-
-    this.state = {
-      loggedOut: false
-    }
   }
 
-  componentDidMount(){
-    Meteor.logout(() => this.setState({ loggedOut: true }))
+  componentDidMount() {
+    Meteor.logout();
   }
 
   render() {
-    if (!this.state.loggedOut) {
+    const { currentUser } = this.props;
+
+    if (currentUser) {
       return (
         <div>
           <h1>Signing out...</h1>
@@ -27,3 +26,9 @@ export default class SignOut extends Component {
     }
   }
 }
+
+export default withTracker(props => {
+  return {
+    currentUser: Meteor.user()
+  }
+})(SignOut)

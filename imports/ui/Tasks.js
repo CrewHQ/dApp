@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Redirect } from "@reach/router";
+import { withTracker } from 'meteor/react-meteor-data';
 
-export default class Tasks extends Component {
+class Tasks extends Component {
   constructor() {
     super();
 
@@ -12,7 +13,9 @@ export default class Tasks extends Component {
   }
 
   render() {
-    if (Meteor.userId()) {
+    const { currentUser } = this.props;
+
+    if (currentUser) {
       return (
         <div>
           <h1>Pick a task</h1>
@@ -23,3 +26,9 @@ export default class Tasks extends Component {
     }
   }
 }
+
+export default withTracker(props => {
+  return {
+    currentUser: Meteor.user()
+  }
+})(Tasks)
