@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base'
+import { Accounts } from 'meteor/accounts-base';
+import { TimezonePicker } from 'meteor/joshowens:timezone-picker';
 
-console.log(Accounts)
+console.log(TimezonePicker)
 
 // Join component - sign up
 export default class Join extends Component {
@@ -33,8 +34,9 @@ export default class Join extends Component {
     e.preventDefault();
     const { email, password, verifyPassword } = this.state;
     const user = { 
-      email, 
-      password: Accounts._hashPassword(password)
+      email: email, 
+      password: password,
+      timezone: TimezonePicker.detectedZone()      
     };
 
     Meteor.callPromise('user.signup', user)
@@ -67,20 +69,23 @@ export default class Join extends Component {
             type="text" 
             placeholder="john@example.com"
             onChange={this.handleEmailChange}
+            autoComplete='email'
           />
 
           <label>Password</label>          
           <input 
             type="password" 
             placeholder="password"
-            onChange={this.handlePasswordChange}            
+            onChange={this.handlePasswordChange}      
+            autoComplete='new-password'      
           />
 
           <label>Verify password</label>                    
           <input 
             type="password" 
             placeholder="verify password"
-            onChange={this.handleVerifyPasswordChange}            
+            onChange={this.handleVerifyPasswordChange}  
+            autoComplete='verify-new-password'      
           />
 
           <button 

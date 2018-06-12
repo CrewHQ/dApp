@@ -1,12 +1,12 @@
 import { Class, Union } from 'meteor/jagi:astronomy'
 
-@AppUsers = new Mongo.Collection 'appUsers'
+AppUsers = new Mongo.Collection 'appUsers'
 
-@AppUser = Class.create
+export default AppUser = Class.create
   name: "AppUser"
   collection: Meteor.users
   fields:
-    name:
+    userName:
       type: String
       optional: true
     emails:
@@ -21,36 +21,32 @@ import { Class, Union } from 'meteor/jagi:astronomy'
       type: Object
       default: -> {}
       optional: true
-    profileUrl:
+    address:
       type: String
       optional: true
-    phone:
+    
+    avatar:
       type: String
       optional: true
-
-    accountIds:
-      type: [ String ]
-      optional: true
-      index: 1      
 
     roles:
       type: Object
       default: -> {}
 
-    providers:
-      type: [ Provider ]
-      optional: true
-      default: -> []
+    # providers:
+    #   type: [ Provider ]
+    #   optional: true
+    #   default: -> []
 
-    fbPages:
-      type: [ FBPage ]
-      optional: true
-      default: -> []
+    # fbPages:
+    #   type: [ FBPage ]
+    #   optional: true
+    #   default: -> []
 
-    inCompanies:
-      type: [ InCompany ]
-      optional: true
-      default: -> []
+    # inCompanies:
+    #   type: [ InCompany ]
+    #   optional: true
+    #   default: -> []
 
     unsubsubscribedFromLists:
       type: [ String ]

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Join from './Join.js';
+import SignIn from './SignIn.js';
 
 // App component - represents the whole app
 export default class App extends Component {
@@ -13,6 +14,10 @@ export default class App extends Component {
     return (
       <div className="container">
         <Join/>
+
+        <hr/>
+        
+        <SignIn/>
       </div>
     );
   }
